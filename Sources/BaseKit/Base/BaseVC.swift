@@ -34,7 +34,7 @@ open class BaseVC<ViewModel: BaseViewModelProtocol & NSObject>: UIViewController
     let log = Logger(subsystem: "com.baseKit.BaseVC", category: "BaseVC")
 
     /// Strong reference to the ViewModel instance. Initialized by default.
-    public let viewModel: ViewModel = ViewModel()
+    public let viewModel: ViewModel? = ViewModel()
 
     // MARK: - Lifecycle Methods
 
@@ -54,7 +54,7 @@ open class BaseVC<ViewModel: BaseViewModelProtocol & NSObject>: UIViewController
         super.viewDidLoad()
         setupUI()
         bindViewModel()
-        viewModel.onViewDidLoad()
+        viewModel?.onViewDidLoad()
     }
 
     /// Notifies the view controller that its view is about to be added to a view hierarchy.
@@ -62,7 +62,7 @@ open class BaseVC<ViewModel: BaseViewModelProtocol & NSObject>: UIViewController
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateUI()
-        viewModel.viewWillAppear()
+        viewModel?.viewWillAppear()
     }
     
     /// Called after the view has been removed from the screen (i.e., disappeared).

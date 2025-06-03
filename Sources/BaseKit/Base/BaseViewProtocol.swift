@@ -28,7 +28,7 @@ protocol BaseViewProtocol: AnyObject {
     /// The ViewModel instance owned by the View.
     ///
     /// Provides business logic and state, which the View observes and reacts to.
-    var viewModel: ViewModelType { get }
+    var viewModel: ViewModelType? { get }
 
     /// A method where the View should subscribe to the ViewModel's outputs
     /// and perform any state or UI bindings.
