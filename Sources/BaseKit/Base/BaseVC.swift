@@ -26,7 +26,7 @@ open class BaseVC<ViewModel: BaseViewModelProtocol & NSObject>: UIViewController
 
     /// Instantiates the view controller using a storyboard or programmatic method.
     /// Assumes conforming types implement the required instantiation logic.
-    public class func instantiates() -> Self {
+    open class func instantiates() -> Self {
         Self.instantiate()
     }
 
