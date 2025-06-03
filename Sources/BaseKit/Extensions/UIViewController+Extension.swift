@@ -9,7 +9,7 @@ import UIKit
 import os
 
 /// Private logger for debugging instantiation issues.
-private let log = Logger(subsystem: "com.baseKit.viewController", category: "extension")
+let controllerLog = Logger(subsystem: "com.baseKit.viewController", category: "extension")
 
 public extension UIViewController {
     
@@ -33,7 +33,7 @@ public extension UIViewController {
             
             guard let viewController = storyboard.instantiateViewController(withIdentifier: identifier) as? T else {
                 let message: String = "❌ ViewController with ID: \(identifier) not found in storyboard \(name)"
-                log.error("\(message)")
+                controllerLog.error("\(message)")
                 fatalError(message)
             }
             
