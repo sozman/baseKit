@@ -38,6 +38,16 @@ open class BaseVC<ViewModel: BaseViewModelProtocol & NSObject>: UIViewController
 
     // MARK: - Lifecycle Methods
 
+
+    /// A closure that is triggered when the current flow or screen is completed.
+    ///
+    /// Typically used in coordination patterns to notify the parent coordinator
+    /// that the child flow can be dismissed or deallocated.
+    ///
+    /// You should call `onFinish?()` when the view controller or coordinator
+    /// has finished its task (e.g., after login, onboarding, or form submission).
+    var onFinish: (() -> Void)?
+    
     /// Called after the controller’s view is loaded into memory.
     /// Subclasses should override `setupUI()` and `bindViewModel()` for setup logic.
     open override func viewDidLoad() {
@@ -53,6 +63,21 @@ open class BaseVC<ViewModel: BaseViewModelProtocol & NSObject>: UIViewController
         super.viewWillAppear(animated)
         updateUI()
         viewModel.viewWillAppear()
+    }
+    
+    /// Called after the view has been removed from the screen (i.e., disappeared).
+    ///
+    /// This method is part of the UIViewController lifecycle and is triggered
+    /// after the view controller’s view is no longer visible to the user.
+    ///
+    /// Override this method to perform any cleanup tasks, cancel timers,
+    /// stop animations, or remove observers/listeners that shouldn't run
+    /// while the view is not visible.
+    ///
+    /// - Parameter animated: A Boolean indicating whether the disappearance was animated.
+    open override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        onFinish?()
     }
 
     // MARK: - ViewModel Binding
