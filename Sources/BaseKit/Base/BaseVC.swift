@@ -36,9 +36,6 @@ open class BaseVC<ViewModel: BaseViewModelProtocol & NSObject>: UIViewController
     /// Strong reference to the ViewModel instance. Initialized by default.
     public let viewModel: ViewModel = ViewModel()
 
-    /// A weak reference to the Coordinator, used for navigation control.
-    weak public var coordinator: (any Coordinator)?
-
     // MARK: - Lifecycle Methods
 
     /// Called after the controller’s view is loaded into memory.
@@ -75,49 +72,6 @@ open class BaseVC<ViewModel: BaseViewModelProtocol & NSObject>: UIViewController
     /// Called during `viewWillAppear` to refresh UI or data.
     /// Can be used to update dynamic views or localized content.
     open func updateUI() {}
-}
-
-// MARK: - Coordinator-Based Navigation Extensions
-
-extension BaseVC {
-
-    /// Navigates to the given view controller using the specified presentation style.
-    ///
-    /// Falls back to direct navigation if a `NavigatableCoordinator` is not assigned.
-    ///
-    /// - Parameters:
-    ///   - viewController: The destination UIViewController.
-    ///   - style: The navigation style (e.g., push, present).
-    ///   - animated: Whether the transition is animated.
-    func safeShow(_ viewController: UIViewController, style: PresentationStyle = .push, animated: Bool = true) {
-        if let coordinator = coordinator as? NavigatableCoordinator {
-            coordinator.show(viewController, style: style, animated: animated)
-        } else {
-            print("⚠️ Coordinator not set on \(type(of: self)) — falling back to manual navigation.")
-
-            switch style {
-            case .push:
-                navigationController?.pushViewController(viewController, animated: animated)
-            case .present, .modalFullScreen:
-                viewController.modalPresentationStyle = .fullScreen
-                present(viewController, animated: animated)
-            case .setAsRoot:
-                navigationController?.setViewControllers([viewController], animated: animated)
-            }
-        }
-    }
-
-    /// Instantiates and navigates to a ViewController conforming to `BaseVCProtocol`.
-    ///
-    /// - Parameters:
-    ///   - type: The type of the destination ViewController.
-    ///   - style: Presentation style.
-    ///   - animated: Animation toggle.
-    func safeShow<VC: BaseVCProtocol>(_ type: VC.Type, style: PresentationStyle = .push, animated: Bool = true) {
-        let viewController = VC.instantiates(bundle: nil)
-        viewController.coordinator = coordinator
-        safeShow(viewController, style: style, animated: animated)
-    }
 }
 
 #if canImport(SwiftUI) && DEBUG

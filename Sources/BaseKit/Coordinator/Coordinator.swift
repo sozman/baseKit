@@ -7,26 +7,39 @@
 
 import UIKit
 
-/// A base protocol that defines the core responsibilities of a Coordinator
-/// in the Coordinator design pattern.
+/// A protocol that defines the contract for coordinators using route-based navigation.
 ///
-/// Coordinators are responsible for:
-/// - Managing navigation flow
-/// - Creating and displaying view controllers
-/// - Decoupling view controllers from navigation logic
+/// Coordinators conforming to this protocol are responsible for:
+/// - Managing view controller presentation via `UINavigationController`
+/// - Starting the initial flow (`start()`)
+/// - Responding to route-based navigation instructions (`handle(_:)`)
 ///
-/// All Coordinators should hold a reference to a `UINavigationController`
-/// and implement the `start()` method to initiate their navigation flow.
+/// This protocol enforces a consistent interface for modular coordinators,
+/// making it easier to scale navigation logic across multiple feature modules.
 public protocol Coordinator: AnyObject {
 
-    /// The navigation controller used to present or push view controllers.
+    /// The type of route the coordinator is expected to handle.
     ///
-    /// It is the central component through which the Coordinator performs routing.
-    var navigationController: UINavigationController? { get set }
+    /// Routes are typically defined as enums and represent abstract navigation actions
+    /// (e.g. `.goToSettings`, `.showProfile(userID: String)`).
+    associatedtype R: Route
 
-    /// Starts the navigation flow for the coordinator.
+    /// The navigation controller used to manage view controller presentation.
     ///
-    /// This method should be overridden by conforming types to launch
-    /// the initial screen or view controller for their feature or flow.
+    /// This provides the foundation for pushing, presenting, and dismissing view controllers.
+    var navigation: UINavigationController { get }
+
+    /// Starts the coordinator’s navigation flow.
+    ///
+    /// Typically called immediately after initialization, this method should launch
+    /// the first screen in the flow (e.g. login screen, onboarding, dashboard).
     func start()
+
+    /// Handles a navigation route defined by the associated `Route` type.
+    ///
+    /// This function allows decoupled navigation by interpreting abstract route instructions
+    /// and translating them into concrete screen transitions.
+    ///
+    /// - Parameter route: The route to be handled by the coordinator.
+    func handle(_ route: R)
 }

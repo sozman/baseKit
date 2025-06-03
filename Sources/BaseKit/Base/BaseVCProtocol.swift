@@ -24,9 +24,4 @@ public protocol BaseVCProtocol: UIViewController {
     ///
     /// - Returns: A fully initialized view controller instance.
     static func instantiates(bundle: Bundle?) -> Self
-
-    /// An optional reference to a Coordinator responsible for navigation and presentation logic.
-    ///
-    /// Allows external flow control without tightly coupling the view controller to navigation logic.
-    var coordinator: (any Coordinator)? { get set }
 }
