@@ -23,7 +23,7 @@ public protocol BaseVCProtocol: UIViewController {
     /// Should be used instead of direct `init()` or storyboard identifiers for better type safety.
     ///
     /// - Returns: A fully initialized view controller instance.
-    static func instantiates() -> Self
+    static func instantiates(bundle: Bundle?) -> Self
 
     /// An optional reference to a Coordinator responsible for navigation and presentation logic.
     ///

@@ -57,7 +57,7 @@ class BaseCoordinator: NavigatableCoordinator {
     ///   - style: The desired presentation style (e.g. push, present).
     ///   - animated: Whether the transition should be animated.
     func show<VC: BaseVCProtocol>(_ type: VC.Type, style: PresentationStyle, animated: Bool) {
-        let viewController = type.instantiates()
+        let viewController = type.instantiates(bundle: nil)
         show(viewController, style: style, animated: animated)
     }
 

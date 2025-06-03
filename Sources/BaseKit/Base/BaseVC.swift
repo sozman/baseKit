@@ -26,8 +26,8 @@ open class BaseVC<ViewModel: BaseViewModelProtocol & NSObject>: UIViewController
 
     /// Instantiates the view controller using a storyboard or programmatic method.
     /// Assumes conforming types implement the required instantiation logic.
-    open class func instantiates() -> Self {
-        Self.instantiate()
+    open class func instantiates(bundle: Bundle? = nil) -> Self {
+        Self.instantiate(bundle: bundle)
     }
 
     /// System logger for BaseVC using the unified logging system (os_log).
@@ -114,7 +114,7 @@ extension BaseVC {
     ///   - style: Presentation style.
     ///   - animated: Animation toggle.
     func safeShow<VC: BaseVCProtocol>(_ type: VC.Type, style: PresentationStyle = .push, animated: Bool = true) {
-        let viewController = VC.instantiates()
+        let viewController = VC.instantiates(bundle: nil)
         viewController.coordinator = coordinator
         safeShow(viewController, style: style, animated: animated)
     }
@@ -125,7 +125,7 @@ extension BaseVC {
 /// A protocol that enables UIViewControllers to be previewed inside SwiftUI.
 /// Must implement `instantiates()` for preview rendering.
 protocol PreviewableVC: UIViewController {
-    static func instantiates() -> Self
+    static func instantiates(bundle: Bundle?) -> Self
 }
 
 /// A SwiftUI wrapper that renders a UIViewController inside the canvas.
