@@ -19,6 +19,15 @@ open class BaseCoordinator<R: Route>: Coordinator {
 
     // MARK: - Properties
 
+    /// A closure that is triggered when the current flow or screen is completed.
+    ///
+    /// Typically used in coordination patterns to notify the parent coordinator
+    /// that the child flow can be dismissed or deallocated.
+    ///
+    /// You should call `onFinish?()` when the view controller or coordinator
+    /// has finished its task (e.g., after login, onboarding, or form submission).
+    public var onFinish: (() -> Void)?
+    
     /// The navigation controller used by this coordinator to manage view controller presentation.
     public let navigation: UINavigationController
 

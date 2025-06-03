@@ -23,6 +23,15 @@ public protocol Coordinator: AnyObject {
     /// Routes are typically defined as enums and represent abstract navigation actions
     /// (e.g. `.goToSettings`, `.showProfile(userID: String)`).
     associatedtype R: Route
+    
+    /// A closure that is triggered when the current flow or screen is completed.
+    ///
+    /// Typically used in coordination patterns to notify the parent coordinator
+    /// that the child flow can be dismissed or deallocated.
+    ///
+    /// You should call `onFinish?()` when the view controller or coordinator
+    /// has finished its task (e.g., after login, onboarding, or form submission).
+    var onFinish: (() -> Void)? { get set }
 
     /// The navigation controller used to manage view controller presentation.
     ///
