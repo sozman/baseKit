@@ -11,7 +11,7 @@ import os
 /// Private logger for debugging instantiation issues.
 private let log = Logger(subsystem: "com.baseKit.viewController", category: "extension")
 
-extension UIViewController {
+public extension UIViewController {
     
     /// Instantiates a view controller from a storyboard that shares the same name as its class.
     ///
