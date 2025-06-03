@@ -46,7 +46,7 @@ open class BaseVC<ViewModel: BaseViewModelProtocol & NSObject>: UIViewController
     ///
     /// You should call `onFinish?()` when the view controller or coordinator
     /// has finished its task (e.g., after login, onboarding, or form submission).
-    var onFinish: (() -> Void)?
+    public var onFinish: (() -> Void)?
     
     /// Called after the controller’s view is loaded into memory.
     /// Subclasses should override `setupUI()` and `bindViewModel()` for setup logic.
