@@ -22,14 +22,14 @@ extension UIViewController {
     /// If these conditions are not met, a runtime crash (`fatalError`) will occur with a helpful log message.
     ///
     /// - Returns: An instance of the view controller.
-    static func instantiate() -> Self {
+    static func instantiate(bundle: Bundle?) -> Self {
         
         /// Inner helper function to handle the generic instantiation.
         func instantiateFromStoryboard<T: UIViewController>() -> T {
             let name = String(describing: self) // e.g., "HomeViewController"
             let identifier = name // storyboard ID must match class name
             
-            let storyboard = UIStoryboard(name: name, bundle: nil)
+            let storyboard = UIStoryboard(name: name, bundle: bundle)
             
             guard let viewController = storyboard.instantiateViewController(withIdentifier: identifier) as? T else {
                 let message: String = "❌ ViewController with ID: \(identifier) not found in storyboard \(name)"
