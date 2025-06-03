@@ -22,7 +22,7 @@ extension UIViewController {
     /// If these conditions are not met, a runtime crash (`fatalError`) will occur with a helpful log message.
     ///
     /// - Returns: An instance of the view controller.
-    static func instantiate(bundle: Bundle?) -> Self {
+    static func instantiate(bundle: Bundle? = nil) -> Self {
         
         /// Inner helper function to handle the generic instantiation.
         func instantiateFromStoryboard<T: UIViewController>() -> T {
